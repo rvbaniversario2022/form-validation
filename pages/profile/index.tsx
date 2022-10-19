@@ -7,6 +7,7 @@ import { Request } from "express";
 import { ParamsDictionary } from "express-serve-static-core";
 import { NextPageContext, NextApiRequest } from "next";
 import { ParsedQs } from "qs";
+import Link from "next/link";
 
 interface Props {
   username: string;
@@ -17,7 +18,7 @@ interface Props {
   phone: string;
 }
 
-const Profile = (props: Props) => {
+const Profile = ({ users }: any) => {
   return (
     <>
       <Head>
@@ -29,41 +30,39 @@ const Profile = (props: Props) => {
           rel="stylesheet"
         />
       </Head>
-      <div>
-        <Navbar />
-        <div>
-          <div>Username: {props.username}</div>
-          <div>First Name: {props.firstName}</div>
-          <div>Middle Name: {props.middleName}</div>
-          <div>Last Name: {props.lastName}</div>
-          <div>Email: {props.email}</div>
-          <div>Phone: {props.phone}</div>
+      <Navbar />
+      {users.map((user: any) => (
+        <div key={user.id}>
+          <Link href={`/profile/${user.id}`}>
+            <a>{user.username}</a>
+          </Link>
         </div>
-      </div>
+      ))}
     </>
   );
 };
 
 export const getServerSideProps = async (ctx: { req: NextApiRequest }) => {
   const cookies = nookies.get(ctx);
-  let user = null;
+  let users = null;
   if (cookies?.jwt) {
+    console.log(users);
     try {
       const { data } = await axios.get(
-        `https://634cd1c5f5d2cc648e952d73.mockapi.io/users/1`,
+        `https://634cd1c5f5d2cc648e952d73.mockapi.io/users`,
         {
           headers: {
             Authorization: `Bearer ${cookies.jwt}`,
           },
         }
       );
-      user = data;
+      users = data;
     } catch (e) {
       console.log(e);
     }
   }
 
-  if (!user) {
+  if (!users) {
     return {
       redirect: {
         permanent: false,
@@ -73,7 +72,7 @@ export const getServerSideProps = async (ctx: { req: NextApiRequest }) => {
   }
 
   return {
-    props: user && user,
+    props: { users },
   };
 };
 

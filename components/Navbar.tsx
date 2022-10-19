@@ -99,10 +99,10 @@ const MenuList = [
   { text: "Contact", href: "/contact" },
   { text: "Login", href: "/login" },
   { text: "Register", href: "/register" },
-  { text: "Profile", href: "/profile" },
+  // { text: "Profile", href: "/profile" },
 ];
 
-const Navbar = () => {
+const Navbar = (props: any) => {
   const router = useRouter();
   const [navActive, setNavActive] = useState(false);
   const [activeIdx, setActiveIdx] = useState(-1);
@@ -141,6 +141,9 @@ const Navbar = () => {
                 <NavItem active={activeIdx === idx} {...menu} />
               </div>
             ))}
+            <Link href={`/profile/${props.id}`}>
+              <a className={`nav__link`}>Profile</a>
+            </Link>
             <Link href="/">
               <a className={`nav__link`} onClick={logout}>
                 Logout
@@ -153,40 +156,18 @@ const Navbar = () => {
   );
 };
 
-// export const getServerSideProps = async (ctx: any) => {
-//   const cookies = nookies.get(ctx);
-//   let user = null;
+export const getServerSideProps = async () => {
+  let user = null;
 
-//   if (cookies?.jwt) {
-//     try {
-//       const { data } = await axios.get(
-//         "https://634cd1c5f5d2cc648e952d73.mockapi.io/users/1",
-//         {
-//           headers: {
-//             Authorization: `Bearer ${cookies.jwt}`,
-//           },
-//         }
-//       );
-//       user = data;
-//     } catch (e) {
-//       console.log(e);
-//     }
-//   }
+  const { data } = await axios.get(
+    `https://634cd1c5f5d2cc648e952d73.mockapi.io/users/1`
+  );
 
-//   if (!user) {
-//     return {
-//       redirect: {
-//         permanent: false,
-//         destination: "/",
-//       },
-//     };
-//   }
-
-//   return {
-//     props: {
-//       props: user && user,
-//     },
-//   };
-// };
+  console.log(user);
+  user = data;
+  return {
+    props: user && user,
+  };
+};
 
 export default Navbar;

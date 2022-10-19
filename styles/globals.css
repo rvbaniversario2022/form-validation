@@ -79,6 +79,10 @@ a {
   text-decoration: none;
 }
 
+.capitalized {
+  text-transform: capitalize;
+}
+
 .main__container {
   font-family: "Inter", sans-serif;
   margin: 0 auto;
