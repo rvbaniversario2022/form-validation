@@ -1,11 +1,17 @@
 import LoginForm from "../components/LoginForm";
 import axios from "axios";
 import nookies from "nookies";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 interface Props {}
 
 const Login = () => {
-  return <LoginForm />;
+  return (
+    <>
+      <LoginForm />
+    </>
+  );
 };
 
 export const getServerSideProps = async (ctx: any) => {

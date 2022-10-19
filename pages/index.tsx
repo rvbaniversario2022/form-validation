@@ -6,8 +6,6 @@ import styles from "../styles/Home.module.css";
 import nookies from "nookies";
 import { NextApiRequest } from "next";
 
-const Container = styled.div``;
-
 interface Props {
   username: string;
   password: string;
@@ -30,13 +28,9 @@ const Home = (props: Props) => {
           rel="stylesheet"
         />
       </Head>
-      <div>
-        <Navbar />
-        <div>
-          Welcome
-          {props.firstName ? ` ${props.firstName}` : " Guest"}
-        </div>
-      </div>
+      <Navbar />
+      Welcome
+      {/* {props.firstName ? ` ${props.firstName}` : " Guest"} */}
     </>
   );
 };

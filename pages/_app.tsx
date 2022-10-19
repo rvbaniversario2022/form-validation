@@ -4,9 +4,6 @@ import { Alert, Snackbar } from "@mui/material";
 import { useState } from "react";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  // const [submitted, setSubmitted] = useState(false);
-  // const [open, setOpen] = useState(false);
-
   // const handleClose = (
   //   event?: React.SyntheticEvent | Event,
   //   reason?: string
