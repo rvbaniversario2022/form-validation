@@ -7,16 +7,21 @@ import nookies from "nookies";
 import { NextApiRequest } from "next";
 
 interface Props {
-  username: string;
-  password: string;
-  firstName: string;
-  middleName: string;
-  lastName: string;
-  email: string;
-  phone: string;
+  activeUser: {
+    id: number;
+    username: string;
+    firstName: string;
+    middleName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    isLogin: boolean;
+  }[];
 }
 
-const Home = (props: Props) => {
+const Home = ({ activeUser }: Props) => {
+  console.log(activeUser);
+
   return (
     <>
       <Head>
@@ -29,49 +34,31 @@ const Home = (props: Props) => {
         />
       </Head>
       <Navbar />
-      Welcome
-      {/* {props.firstName ? ` ${props.firstName}` : " Guest"} */}
+      {activeUser.map((user: any) => (
+        <div key={user.id} className="capitalized">
+          Welcome {`${user.firstName} ${user.lastName}`}!
+        </div>
+      ))}
     </>
   );
 };
 
-export const getServerSideProps = async () => {
-  let user = null;
+export const getServerSideProps = async (ctx: any) => {
+  let activeUser = null;
 
-  try {
-    const { data } = await axios.get(
-      `https://634cd1c5f5d2cc648e952d73.mockapi.io/users/1`
-    );
+  const { data } = await axios.get(
+    "https://634cd1c5f5d2cc648e952d73.mockapi.io/users"
+  );
 
-    user = data;
-  } catch (e) {
-    console.log(e);
-  }
+  activeUser = data.filter((user: any) => {
+    if (user.isLogin) {
+      return user;
+    }
+  });
 
   return {
-    props: user && user,
+    props: { activeUser },
   };
 };
-
-// This gets called on every request
-// export async function getServerSideProps() {
-//   // Fetch data from external API
-//   const res = await fetch(
-//     "https://634cd1c5f5d2cc648e952d73.mockapi.io/users/1"
-//   );
-//   const data = await res.json();
-
-//   // Pass data to the page via props
-//   return { props: { data } };
-// }
-
-// export async function getServerSideProps() {
-//   // Fetch data from external API
-//   const res = await fetch("https://634cd1c5f5d2cc648e952d73.mockapi.io/users");
-//   const data = await res.json();
-
-//   // Pass data to the page via props
-//   return { props: { data } };
-// }
 
 export default Home;

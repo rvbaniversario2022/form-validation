@@ -8,6 +8,7 @@ import { ParamsDictionary } from "express-serve-static-core";
 import { NextPageContext, NextApiRequest } from "next";
 import { ParsedQs } from "qs";
 import Link from "next/link";
+import ProfileData from "../../components/ProfileData";
 
 interface Props {
   username: string;
@@ -31,13 +32,14 @@ const Profile = ({ users }: any) => {
         />
       </Head>
       <Navbar />
-      {users.map((user: any) => (
+      {/* {users.map((user: any) => (
         <div key={user.id}>
           <Link href={`/profile/${user.id}`}>
             <a>{user.username}</a>
           </Link>
         </div>
-      ))}
+      ))} */}
+      <ProfileData users={users} />
     </>
   );
 };
@@ -46,7 +48,6 @@ export const getServerSideProps = async (ctx: any) => {
   const cookies = nookies.get(ctx);
   let users = null;
   if (cookies?.jwt) {
-    console.log(users);
     try {
       const { data } = await axios.get(
         `https://634cd1c5f5d2cc648e952d73.mockapi.io/users`,

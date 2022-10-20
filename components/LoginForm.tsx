@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Formik, useFormik } from "formik";
+import { Formik, FormikHelpers, useFormik } from "formik";
 import * as yup from "yup";
 import {
   FormControl,
@@ -111,7 +111,7 @@ const LoginForm = () => {
       router.events.off("routeChangeComplete", handleComplete);
       router.events.off("routeChangeError", handleStart);
     };
-  });
+  }, []);
 
   return (
     <>

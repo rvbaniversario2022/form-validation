@@ -1,6 +1,8 @@
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 import nookies from "nookies";
+import Navbar from "../../components/Navbar";
+import UserData from "../../components/UserData";
 
 interface Props {
   details: {
@@ -20,7 +22,9 @@ const UserDetails = (props: Props) => {
   const { details } = props;
   return (
     <>
-      {details.map((detail) => (
+      <Navbar />
+      <UserData details={details} />
+      {/* {details.map((detail) => (
         <div>
           <div>User ID: {detail.id}</div>
           <div>Username: {detail.username}</div>
@@ -30,7 +34,7 @@ const UserDetails = (props: Props) => {
           <div>Email: {detail.email}</div>
           <div>Phone: {detail.phone}</div>
         </div>
-      ))}
+      ))} */}
     </>
   );
 };

@@ -1,11 +1,17 @@
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
-import { setCookie } from "nookies";
+import { parseCookies, setCookie } from "nookies";
 import { LoginTypes } from "../../types";
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const { password, username } = req.body;
+const updateIsLogin = async (e: boolean) => {
+  await axios.put("https://634cd1c5f5d2cc648e952d73.mockapi.io/users/8", {
+    isLogin: e,
+  });
+};
 
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+  updateIsLogin(true);
+  const { password, username } = await req.body;
   try {
     const getRes = await axios.get(
       "https://634cd1c5f5d2cc648e952d73.mockapi.io/users"
@@ -17,7 +23,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       }
     });
 
-    setCookie({ res }, "jwt", users, {
+    setCookie({ res }, "jwt", "this_is_a_token", {
       httpOnly: true,
       maxAge: 30 * 24 * 60 * 60,
       path: "/",

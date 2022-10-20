@@ -80,7 +80,7 @@ function RegisterForm() {
     onSubmit: async (userData) => {
       try {
         await axios.post("api/register", userData);
-        router.replace("/login");
+        router.replace("/");
       } catch (err) {
         console.log(err);
       }
