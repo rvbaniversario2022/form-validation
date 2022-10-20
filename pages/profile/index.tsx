@@ -42,7 +42,7 @@ const Profile = ({ users }: any) => {
   );
 };
 
-export const getServerSideProps = async (ctx: { req: NextApiRequest }) => {
+export const getServerSideProps = async (ctx: any) => {
   const cookies = nookies.get(ctx);
   let users = null;
   if (cookies?.jwt) {

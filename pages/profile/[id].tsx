@@ -1,19 +1,34 @@
 import axios from "axios";
-import { NextApiRequest } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
 import nookies from "nookies";
 
-const Profile = ({ users, id }: any) => {
+interface Props {
+  details: {
+    id: string;
+    username: string;
+    password: string;
+    confirmPassword: string;
+    firstName: string;
+    middleName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+  }[];
+}
+
+const UserDetails = (props: Props) => {
+  const { details } = props;
   return (
     <>
-      {users.map((user: any) => (
+      {details.map((detail) => (
         <div>
-          <div>User ID: {user.id}</div>
-          <div>Username: {user.username}</div>
-          <div className="capitalized">First Name: {user.firstName}</div>
-          <div className="capitalized">Middle Name: {user.middleName}</div>
-          <div className="capitalized">Last Name: {user.lastName}</div>
-          <div>Email: {user.email}</div>
-          <div>Phone: {user.phone}</div>
+          <div>User ID: {detail.id}</div>
+          <div>Username: {detail.username}</div>
+          <div className="capitalized">First Name: {detail.firstName}</div>
+          <div className="capitalized">Middle Name: {detail.middleName}</div>
+          <div className="capitalized">Last Name: {detail.lastName}</div>
+          <div>Email: {detail.email}</div>
+          <div>Phone: {detail.phone}</div>
         </div>
       ))}
     </>
@@ -24,9 +39,8 @@ export const getServerSideProps = async (ctx: any) => {
   const cookies = nookies.get(ctx);
   const { params } = ctx;
   const { id } = params;
-  let users = null;
+  let details = null;
   if (cookies?.jwt) {
-    console.log(users);
     try {
       const { data } = await axios.get(
         `https://634cd1c5f5d2cc648e952d73.mockapi.io/users?id=${id}`,
@@ -36,13 +50,13 @@ export const getServerSideProps = async (ctx: any) => {
           },
         }
       );
-      users = data;
+      details = data;
     } catch (e) {
       console.log(e);
     }
   }
 
-  if (!users) {
+  if (!details) {
     return {
       redirect: {
         permanent: false,
@@ -52,8 +66,8 @@ export const getServerSideProps = async (ctx: any) => {
   }
 
   return {
-    props: { users, id },
+    props: { details },
   };
 };
 
-export default Profile;
+export default UserDetails;

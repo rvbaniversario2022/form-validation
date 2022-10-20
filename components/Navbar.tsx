@@ -141,7 +141,7 @@ const Navbar = (props: any) => {
                 <NavItem active={activeIdx === idx} {...menu} />
               </div>
             ))}
-            <Link href={`/profile/${props.id}`}>
+            <Link href="/profile">
               <a className={`nav__link`}>Profile</a>
             </Link>
             <Link href="/">
@@ -154,20 +154,6 @@ const Navbar = (props: any) => {
       </nav>
     </>
   );
-};
-
-export const getServerSideProps = async () => {
-  let user = null;
-
-  const { data } = await axios.get(
-    `https://634cd1c5f5d2cc648e952d73.mockapi.io/users/1`
-  );
-
-  console.log(user);
-  user = data;
-  return {
-    props: user && user,
-  };
 };
 
 export default Navbar;
