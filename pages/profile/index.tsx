@@ -9,17 +9,13 @@ import { NextPageContext, NextApiRequest } from "next";
 import { ParsedQs } from "qs";
 import Link from "next/link";
 import ProfileData from "../../components/ProfileData";
+import { UserDetails } from "../../types";
 
 interface Props {
-  username: string;
-  firstName: string;
-  middleName: string;
-  lastName: string;
-  email: string;
-  phone: string;
+  users: UserDetails[];
 }
 
-const Profile = ({ users }: any) => {
+const Profile = ({ users }: Props) => {
   return (
     <>
       <Head>
@@ -44,7 +40,16 @@ const Profile = ({ users }: any) => {
   );
 };
 
-export const getServerSideProps = async (ctx: any) => {
+export const getServerSideProps = async (
+  ctx:
+    | Pick<NextPageContext, "req">
+    | { req: NextApiRequest }
+    | {
+        req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>;
+      }
+    | null
+    | undefined
+) => {
   const cookies = nookies.get(ctx);
   let users = null;
   if (cookies?.jwt) {

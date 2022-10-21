@@ -16,6 +16,7 @@ import { ParamsDictionary } from "express-serve-static-core";
 import { NextPageContext, NextApiRequest } from "next";
 import { ParsedQs } from "qs";
 import Link from "next/link";
+import { UserDetails } from "../types";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -37,26 +38,27 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export default function TableData({ details }: any) {
+interface Props {
+  details: UserDetails[];
+}
+
+export default function TableData({ details }: Props) {
   return (
     <TableContainer className="table__container" component={Paper}>
       <Table aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Username</StyledTableCell>
             <StyledTableCell>First Name</StyledTableCell>
             <StyledTableCell>Middle Name</StyledTableCell>
             <StyledTableCell>Last Name</StyledTableCell>
+            <StyledTableCell>Username</StyledTableCell>
             <StyledTableCell>Email</StyledTableCell>
             <StyledTableCell>Phone</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {details.map((detail: any) => (
+          {details.map((detail: UserDetails) => (
             <StyledTableRow key={detail.id}>
-              <StyledTableCell component="th" scope="row">
-                {detail.username}
-              </StyledTableCell>
               <StyledTableCell className="capitalized">
                 {detail.firstName}
               </StyledTableCell>
@@ -65,6 +67,9 @@ export default function TableData({ details }: any) {
               </StyledTableCell>
               <StyledTableCell className="capitalized">
                 {detail.lastName}
+              </StyledTableCell>
+              <StyledTableCell component="th" scope="row">
+                {detail.username}
               </StyledTableCell>
               <StyledTableCell>{detail.email}</StyledTableCell>
               <StyledTableCell>{detail.phone}</StyledTableCell>

@@ -17,7 +17,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         lastName,
         password,
         phone,
-        isLogin: true,
+        token: "this_is_a_token",
       }
     );
 

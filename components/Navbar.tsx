@@ -102,7 +102,7 @@ const MenuList = [
   // { text: "Profile", href: "/profile" },
 ];
 
-const Navbar = (props: any) => {
+const Navbar = () => {
   const router = useRouter();
   const [navActive, setNavActive] = useState(false);
   const [activeIdx, setActiveIdx] = useState(-1);

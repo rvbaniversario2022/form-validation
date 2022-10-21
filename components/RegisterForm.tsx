@@ -11,12 +11,8 @@ import {
   IconButton,
 } from "@mui/material";
 import styled from "styled-components";
-import { NextApiRequest, NextApiResponse } from "next";
 import { useRouter } from "next/router";
 import axios from "axios";
-import Cookies from "cookies";
-
-import { RegisterTypes } from "../types";
 import Link from "next/link";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import Loader from "./Loader";

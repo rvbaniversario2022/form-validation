@@ -16,6 +16,7 @@ import { ParamsDictionary } from "express-serve-static-core";
 import { NextPageContext, NextApiRequest } from "next";
 import { ParsedQs } from "qs";
 import Link from "next/link";
+import { UserDetails } from "../types";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -37,7 +38,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export default function TableData({ users }: any) {
+interface Props {
+  users: UserDetails[];
+}
+
+export default function TableData({ users }: Props) {
   return (
     <TableContainer className="table__container" component={Paper}>
       <Table aria-label="customized table">
@@ -52,7 +57,7 @@ export default function TableData({ users }: any) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {users.map((user: any) => (
+          {users.map((user: UserDetails) => (
             <Link href={`/profile/${user.id}`}>
               <StyledTableRow key={user.id}>
                 <StyledTableCell className="capitalized">

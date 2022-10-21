@@ -3,22 +3,13 @@ import { NextApiRequest, NextApiResponse } from "next";
 import nookies from "nookies";
 import Navbar from "../../components/Navbar";
 import UserData from "../../components/UserData";
+import { UserDetails } from "../../types";
 
 interface Props {
-  details: {
-    id: string;
-    username: string;
-    password: string;
-    confirmPassword: string;
-    firstName: string;
-    middleName: string;
-    lastName: string;
-    email: string;
-    phone: string;
-  }[];
+  details: UserDetails[];
 }
 
-const UserDetails = (props: Props) => {
+const Details = (props: Props) => {
   const { details } = props;
   return (
     <>
@@ -74,4 +65,4 @@ export const getServerSideProps = async (ctx: any) => {
   };
 };
 
-export default UserDetails;
+export default Details;

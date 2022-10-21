@@ -3,6 +3,10 @@ import axios from "axios";
 import nookies from "nookies";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { Request } from "express";
+import { ParamsDictionary } from "express-serve-static-core";
+import { NextPageContext, NextApiRequest } from "next";
+import { ParsedQs } from "qs";
 
 interface Props {}
 
@@ -14,7 +18,16 @@ const Login = () => {
   );
 };
 
-export const getServerSideProps = async (ctx: any) => {
+export const getServerSideProps = async (
+  ctx:
+    | Pick<NextPageContext, "req">
+    | { req: NextApiRequest }
+    | {
+        req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>;
+      }
+    | null
+    | undefined
+) => {
   const cookies = nookies.get(ctx);
   let user = null;
   if (cookies?.jwt) {

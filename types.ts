@@ -1,20 +1,10 @@
-export interface RegisterTypes {
-  username: string;
-  password: string;
-  confirmPassword: string;
-  firstName: string;
-  middleName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-}
+// export interface LoginTypes {
+//   username: string;
+//   password: string;
+// }
 
-export interface LoginTypes {
-  username: string;
-  password: string;
-}
-
-export interface Users {
+export interface UserDetails {
+  id: number;
   username: string;
   password: string;
   firstName: string;
@@ -22,4 +12,5 @@ export interface Users {
   lastName: string;
   email: string;
   phone: string;
+  isLogin: boolean;
 }

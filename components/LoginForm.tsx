@@ -14,7 +14,6 @@ import {
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
-import { LoginTypes } from "../types";
 import { NextApiRequest, NextApiResponse } from "next";
 import Link from "next/link";
 import { useCookies } from "react-cookie";
@@ -65,14 +64,16 @@ const LoginForm = () => {
         "https://634cd1c5f5d2cc648e952d73.mockapi.io/users"
       );
       const data = getRes.data;
-      const result = data.filter((user: LoginTypes) => {
-        if (
-          user.username === userData.username &&
-          user.password === userData.password
-        ) {
-          return user;
+      const result = data.filter(
+        (user: { username: string; password: string }) => {
+          if (
+            user.username === userData.username &&
+            user.password === userData.password
+          ) {
+            return user;
+          }
         }
-      });
+      );
 
       if (result.length === 0) {
         console.log("User does not exist");

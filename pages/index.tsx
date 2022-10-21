@@ -5,22 +5,14 @@ import Navbar from "../components/Navbar";
 import styles from "../styles/Home.module.css";
 import nookies from "nookies";
 import { NextApiRequest } from "next";
+import { UserDetails } from "../types";
 
 interface Props {
-  activeUser: {
-    id: number;
-    username: string;
-    firstName: string;
-    middleName: string;
-    lastName: string;
-    email: string;
-    phone: string;
-    isLogin: boolean;
-  }[];
+  activeUser: UserDetails[];
 }
 
-const Home = ({ activeUser }: Props) => {
-  console.log(activeUser);
+const Home = ({ details }: any) => {
+  console.log(details);
 
   return (
     <>
@@ -34,30 +26,21 @@ const Home = ({ activeUser }: Props) => {
         />
       </Head>
       <Navbar />
-      {activeUser.map((user: any) => (
-        <div key={user.id} className="capitalized">
-          Welcome {`${user.firstName} ${user.lastName}`}!
-        </div>
-      ))}
+      <div> {`Welcome ${details.firstName} ${details.lastName}!`}</div>
     </>
   );
 };
 
-export const getServerSideProps = async (ctx: any) => {
-  let activeUser = null;
+export const getServerSideProps = async () => {
+  let details = null;
 
   const { data } = await axios.get(
-    "https://634cd1c5f5d2cc648e952d73.mockapi.io/users"
+    "https://634cd1c5f5d2cc648e952d73.mockapi.io/users/1"
   );
-
-  activeUser = data.filter((user: any) => {
-    if (user.isLogin) {
-      return user;
-    }
-  });
+  details = data;
 
   return {
-    props: { activeUser },
+    props: { details },
   };
 };
 
